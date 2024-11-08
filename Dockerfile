@@ -1,16 +1,22 @@
-# Base image
-FROM mirror.gcr.io/library/node:14
+# Use official Node.js image
+FROM node:18-alpine
 
-# Create and set working directory
-WORKDIR /usr/src/app
+# Set working directory
+WORKDIR /app
 
-# Copy package.json and install dependencies
-COPY package*.json ./
+# Copy package files and install dependencies
+COPY package.json package-lock.json ./
 RUN npm install
 
-# Copy all files
+# Copy application code
 COPY . .
 
-# Expose port and start the app
-EXPOSE 8080
+# Expose port
+EXPOSE 3000
+
+# Health check (optional)
+HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost:3000 || exit 1
+
+# Start application
 CMD ["npm", "start"]
