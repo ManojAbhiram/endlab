@@ -1,5 +1,5 @@
 # Base image
-FROM node:14
+FROM mirror.gcr.io/library/node:14
 
 # Create and set working directory
 WORKDIR /usr/src/app
