@@ -11,10 +11,6 @@ RUN npm install
 # Copy all files
 COPY . .
 
-# Define build, test, and start commands
-RUN npm test || true
-RUN npm run build || true
-
 # Expose port and start the app
 EXPOSE 8080
 CMD ["npm", "start"]
