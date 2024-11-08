@@ -1,22 +1,18 @@
-# Use official Node.js image
-FROM node:18-alpine
+# Use an official Node.js image from Docker Hub
+FROM node:14
 
-# Set working directory
-WORKDIR /app
+# Set the working directory
+WORKDIR /usr/src/app
 
-# Copy package files and install dependencies
-COPY package.json package-lock.json ./
+# Copy package.json and install dependencies
+COPY package*.json ./
 RUN npm install
 
-# Copy application code
+# Copy the rest of the application files
 COPY . .
 
-# Expose port
+# Expose port 3000 to access the app
 EXPOSE 3000
 
-# Health check (optional)
-HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
-    CMD curl -f http://localhost:3000 || exit 1
-
-# Start application
-CMD ["npm", "start"]
+# Start the Node.js application
+CMD ["node", "server.js"]
